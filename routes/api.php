@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EntitiesController;
 use App\Http\Controllers\EntriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/entries', [EntriesController::class, 'getEntries']);
+
+Route::get('{category}', [EntitiesController::class, 'getEntitiesByCategory']);
