@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repository\Category\CategoryRepository;
+use App\Repository\Category\ICategoryRepository;
 use App\Repository\Entity\EntityRepository;
 use App\Repository\Entity\IEntityRepository;
 use App\Services\EntriesApiService;
@@ -15,10 +17,13 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(EntriesApiService::class, function ($app) {
-            return new EntriesApiService( $app->make(IEntityRepository::class) );
+            return new EntriesApiService(
+                $app->make(IEntityRepository::class),
+                $app->make(ICategoryRepository::class));
         });
 
         $this->app->bind(IEntityRepository::class, EntityRepository::class);
+        $this->app->bind(ICategoryRepository::class, CategoryRepository::class);
     }
 
     /**
