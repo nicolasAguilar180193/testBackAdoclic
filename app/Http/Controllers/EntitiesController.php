@@ -14,11 +14,7 @@ class EntitiesController extends Controller
 
     public function getEntitiesByCategory(Category $category): EntitiesCollection
     {
-        try {
-            $entities = $this->entityRepository->getAll($category->id);
-            return EntitiesCollection::make($entities);
-        } catch (NotFoundHttpException $e) {
-            return response()->json(['message' => 'NMo existe esa categoria papa!!!!!'], 404);
-        }
+        $entities = $this->entityRepository->getAll($category->id);
+        return EntitiesCollection::make($entities);
     }
 }

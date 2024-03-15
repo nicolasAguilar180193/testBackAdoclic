@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/entries', [EntriesController::class, 'getEntries']);
+Route::get('/entries', [EntriesController::class, 'getEntries'])->name('api.entries.get');
 
-Route::get('{category}', [EntitiesController::class, 'getEntitiesByCategory']);
+Route::get('{category}', [EntitiesController::class, 'getEntitiesByCategory'])->name('api.entities.get');
