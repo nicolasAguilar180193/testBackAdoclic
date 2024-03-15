@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\EntriesApiException;
 use App\Models\Category;
 use App\Models\Entity;
 use GuzzleHttp\Client;
@@ -30,7 +31,7 @@ class EntriesApiService
 			}
 			return 'Entries added successfully';
 		} catch (\Exception $e) {
-			return $e->getMessage();
+			throw new EntriesApiException();
 		}
 		
 	}
