@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\EntitiesCollection;
 use App\Models\Category;
-use App\Models\Entity;
+use App\Repository\Entity\IEntityRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EntitiesController extends Controller
 {
+
+    public function __construct(private IEntityRepository $entityRepository) { }
+
     public function getEntitiesByCategory(Category $category): EntitiesCollection
     {
         try {
-            $entities = Entity::where('category_id', $category->id)->with('category')->get();
+            $entities = $this->entityRepository->getAll($category->id);
             return EntitiesCollection::make($entities);
         } catch (NotFoundHttpException $e) {
-            // throw new NotFoundHttpException('NMo existe esa categoria papa!!!!!');
             return response()->json(['message' => 'NMo existe esa categoria papa!!!!!'], 404);
         }
     }
