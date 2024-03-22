@@ -17,9 +17,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(EntriesApiService::class, function ($app) {
+            $client = new \GuzzleHttp\Client();
             return new EntriesApiService(
                 $app->make(IEntityRepository::class),
-                $app->make(ICategoryRepository::class));
+                $app->make(ICategoryRepository::class),
+                $client);
         });
 
         $this->app->bind(IEntityRepository::class, EntityRepository::class);

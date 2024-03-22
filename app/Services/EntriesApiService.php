@@ -12,14 +12,14 @@ class EntriesApiService
 
 	public function __construct(
 		private IEntityRepository $entityRepository,
-		private ICategoryRepository $categoryRepository
+		private ICategoryRepository $categoryRepository,
+		private Client $client
 		) {}
 
 	public function getEntries()
 	{
-		$client = new Client();
 		try {
-			$response = $client->get('https://api.publicapis.org/entries');
+			$response = $this->client->get('https://api.publicapis.org/entries');
 			if ($response->getStatusCode() !== 200) {
 				throw new EntriesApiException();
 			}
@@ -29,6 +29,7 @@ class EntriesApiService
 			}
 			return 'Entries added successfully';
 		} catch (\Exception $e) {
+			echo($e->getMessage());
 			throw new EntriesApiException();
 		}
 	}
